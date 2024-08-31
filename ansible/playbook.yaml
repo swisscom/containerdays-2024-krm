@@ -1,0 +1,37 @@
+---
+- name: Get
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    # enhance: select by label and iterate over it
+    - name: read high level intent ConfigMap
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: ConfigMap
+        name: ansible-prefix-to-ipclaim-template
+        namespace: metallb-system
+      register: input
+
+    - name: Create intermediate NetBox PrefixClaim
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'templates/intermediate-prefixclaim.j2') | from_yaml }}"
+        wait: yes  # We need both wait=yes and wait_condition.type=Ready for Ansible to really wait.
+        wait_condition:
+          type: Ready
+
+    - name: Get intermediate NetBox PrefixClaim
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: PrefixClaim
+        name: "{{ input.resources[0].metadata.name }}"
+        namespace: "{{ input.resources[0].metadata.namespace }}"
+      register: inermediate_prefixclaim
+    
+    # enhance: wait for ready condition of prefixclaim
+    - name: Create output MetalLB IpAddressPool
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'templates/ipaddresspool.j2') | from_yaml }}"
+        wait_condition:
+          status: "True"

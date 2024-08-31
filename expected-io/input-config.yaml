@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-prefix-to-ipclaim-template
+  namespace: default
+data:
+  parentPrefix: "10.0.0.0/16"
+  prefixLength: "/24"

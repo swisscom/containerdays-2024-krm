@@ -1,0 +1,14 @@
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: "{{ input.resources[0].metadata.name + 'output' }}"
+  namespace: metallb-system
+  ownerReferences:
+    - apiVersion: {{ input.resources[0].apiVersion }}
+      kind: {{ input.resources[0].kind }}
+      name: {{ input.resources[0].metadata.name }}
+      uid: {{ input.resources[0].metadata.uid }}
+spec:
+  addresses:
+    - "{{ inermediate_prefixclaim.resources[0].status.prefix }}"

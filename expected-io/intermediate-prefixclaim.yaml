@@ -1,0 +1,11 @@
+---
+apiVersion: netbox.dev/v1
+kind: PrefixClaim
+metadata:
+  name: input-prefixclaim
+spec:
+  parentPrefix: "10.0.0.0/16"
+  prefixLength: "/24"
+  preserveInNetbox: true
+status:
+  prefix: 10.0.1.0/28

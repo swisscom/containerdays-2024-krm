@@ -1,0 +1,15 @@
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: "[input.context[0].metadata.name, 'output'].concat('-')"
+  namespace: "['metallb', 'system'].concat('-')"
+  annotations:
+    kform.dev/block-type: resource
+    kform.dev/resource-type: kubernetes_manifest
+    kform.dev/resource-id: connectionpoint
+    kform.dev/depends-on:
+      - kubernetes_manifest.prefixclaim
+spec:
+  addresses:
+    - "kubernetes_manifest.prefixclaim[0].status.prefix"

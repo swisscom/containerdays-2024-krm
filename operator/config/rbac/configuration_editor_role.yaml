@@ -1,0 +1,27 @@
+# permissions for end users to edit configurations.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: operator
+    app.kubernetes.io/managed-by: kustomize
+  name: configuration-editor-role
+rules:
+- apiGroups:
+  - hydration-demo.swisscom.com
+  resources:
+  - configurations
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - hydration-demo.swisscom.com
+  resources:
+  - configurations/status
+  verbs:
+  - get

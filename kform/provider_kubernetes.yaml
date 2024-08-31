@@ -1,0 +1,7 @@
+---
+apiVersion: kubernetes.provider.kform.io/v1alpha1
+kind: ProviderConfig
+metadata:
+  name: kubernetes
+  annotations:
+    kform.dev/block-type: provider

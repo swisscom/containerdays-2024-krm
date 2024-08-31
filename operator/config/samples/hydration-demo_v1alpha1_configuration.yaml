@@ -1,0 +1,11 @@
+---
+apiVersion: hydration-demo.swisscom.com/v1alpha1
+kind: Configuration
+metadata:
+  name: operator-prefix-to-ipclaim-example
+  namespace: metallb-system
+  labels:
+    demo: input
+spec:
+  parentPrefix: "10.0.0.0/16"
+  prefixLength: "/24"
