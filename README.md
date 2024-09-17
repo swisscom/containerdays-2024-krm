@@ -17,14 +17,6 @@ Contact us on slack:
 
 ## Prepare Demo Environment
 
-### NetBox demo
-
-In order for the NetBox Operator to work with the API of the demo environment, please follow these steps:
-
-1. Open <https://demo.netbox.dev/plugins/demo/login/> and create any user
-1. Open <https://demo.netbox.dev/user/api-tokens/> and create a token "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" with default settings
-1. Open <https://demo.netbox.dev/extras/custom-fields/add/> and create a custom field called "netboxOperatorRestorationHash" for Object types "IPAM > IP Address" and "IPAM > Prefix"
-
 ### Kind with CRDs and local NetBox Operator instance
 
 ```bash
@@ -38,10 +30,8 @@ pushd /tmp
 git clone https://github.com/netbox-community/netbox-operator || echo "already exists"
 pushd netbox-operator
 make install
-export AUTH_TOKEN=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-export NETBOX_HOST=demo.netbox.dev
-export POD_NAMESPACE=default
-go run ./cmd/main.go &
+make create-kind
+make deploy-kind
 popd
 popd
 ```

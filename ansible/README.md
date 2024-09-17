@@ -28,7 +28,7 @@ ansible-playbook playbook.yaml
 for i in {1..16}; do
   kubectl create svc loadbalancer ansible-test-${i} --tcp 80:80
 done
-kubectl get svc | grep -v kubernetes
+kubectl get svc | grep -v kubernetes | grep -v postgres | grep -v netbox
 for i in {1..16}; do
   kubectl delete svc ansible-test-${i} > /dev/null
 done
